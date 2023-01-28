@@ -46,7 +46,7 @@ class Dice:
         checking
             1. input should be tuple
             2. len of the input should be equal to numSide
-            3. sum of probabilities should be 1.0
+            3. sum of probabilities should be 1.00000 ( checking upto 5 precisions )
             4. All values should be non negaitve
         '''
 
