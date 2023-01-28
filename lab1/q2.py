@@ -100,7 +100,6 @@ class Dice:
 
 if __name__ == '__main__':
 
-    d = Dice(6)
-    d.setProb((0.2, 0.1, 0.4, 0.2, 0.05, 0.05))
-    print(d)
-    d.roll(1000)
+    d = Dice(4)
+    d.setProb((0.1, 0.2, 0.3, 0.4))
+    d.roll(10000)
