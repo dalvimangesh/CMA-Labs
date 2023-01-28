@@ -35,9 +35,9 @@ plt.grid()
 plt.show()
 
 
-plt.plot(difference,'r:' ,label=' log(n!) - log( Stirling Approximation for n ) ')
-plt.ylim(-0.000001,0.000001)
-plt.axhline( y = 0 ,color = 'blue', label = 'zero line')
+plt.plot(difference,color='tab:red' ,label=' log(n!) - log( Stirling Approximation for n ) ', linestyle='solid')
+plt.ylim(-0.000003,0.000003)
+plt.axhline( y = 0 ,color = 'tab:blue', label = 'zero line')
 plt.xlabel('n')
 plt.legend(loc='best')
 plt.grid()
