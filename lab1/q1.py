@@ -51,7 +51,7 @@ def findDiff(list1, list2):
 
 if __name__ == '__main__':
 
-    noOfExpt = 1000000
+    noOfExpt = 1000000 # No of experiments
 
     ActuralFactorials = findLogActualFactorials(noOfExpt)
     logStirling = findLogWithStirling(noOfExpt)
