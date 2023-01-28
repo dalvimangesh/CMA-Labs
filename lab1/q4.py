@@ -1,4 +1,18 @@
 import random
+import sys
+
+
+def Check(method):
+
+    def newFunction(ref, *arg, **kwargs):
+        try:
+            method(ref, *arg, **kwargs)
+        except Exception as e:
+            print(type(e))
+            print(e)
+            sys.exit(-1)
+
+    return newFunction
 
 
 class TextGenerator:
@@ -61,10 +75,16 @@ class TextGenerator:
     Some random function
     '''
 
+    @Check
     def generateText(self, num=None, word=None):
 
-        if (num is None) or (word is not None and (word not in self.wordToAllTuple)):
-            return
+        if type(num) is not int:
+            raise Exception(
+                'Number of words to be generated is mandatory argument')
+
+        if (word is not None and (word not in self.wordToAllTuple)):
+            raise Exception(
+                'Unable to produce text with the specified start word')
 
         def getRandomWord():
             return random.choice(self.wordsList)
@@ -88,7 +108,7 @@ class TextGenerator:
         generated = 0
         answer = ''
 
-        while generated < num:
+        while True:
 
             if startWord is None:
                 startWord = getRandomWord()
@@ -96,14 +116,23 @@ class TextGenerator:
             if curTuple is None:
                 curTuple = getRandomTuple(startWord)
                 answer += curTuple[0]
+                generated += 1
+                if generated == num:
+                    break
                 answer += " "
+                
                 answer += curTuple[1]
+                generated += 1
+                if generated == num:
+                    break
                 answer += " "
-                generated += 2
+
             else:
                 answer += curTuple[1]
-                answer += " "
                 generated += 1
+                if generated == num:
+                    break
+                answer += " "
 
             newWord = getWordFromPrefixDic(curTuple)
 
@@ -114,12 +143,9 @@ class TextGenerator:
             else:
                 curTuple = (curTuple[1], newWord)
 
-        print(generated)
-        print(answer)
-
 
 if __name__ == '__main__':
 
     t = TextGenerator()
     t.assimilateText('sherlock.txt')
-    t.generateText(150, 'the')
+    t.generateText(50, 'London')

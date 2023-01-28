@@ -15,24 +15,30 @@ for i in range(1, 1000001):
     val = (math.log(2*math.pi)/2) + ((math.log(i)) * (1/2 + i)) - (i * math.log(math.e))
     factWithStirlingApprox.append(val)
 
-# difference = []
-# for i in range(0,1000001):
-#     difference.append(factOriginal[i]-factWithStirlingApprox[i])
+difference = []
+for i in range(0,1000001):
+    difference.append( factOriginal[i]-factWithStirlingApprox[i]  )
 
 
-plt.plot(factOriginal,'r',label='Original Factorial',linewidth = '1.5')
 
-plt.plot(factWithStirlingApprox,'b:',label='Stirling Approximation',linewidth = '3.5')
+plt.plot(factOriginal,'r',label='log(n!)',linewidth = '1.5')
 
-# plt.plot([0]*(len(factOriginal)+len(factOriginal)),range(-1000001,1000001))
-# plt.plot(range(0,1000001),[0]*len(factOriginal))
+plt.plot(factWithStirlingApprox,'b:',label='log ( Stirling Approximation  for n)',linewidth = '3.5')
 
-# plt.scatter(difference,'g--')
-
-plt.xlabel('integers')
-plt.ylabel('factorials')
+plt.xlabel('n')
+plt.ylabel('log values')
 
 
 plt.title('Stirlings approximation')
 plt.legend(loc='best')
+plt.grid()
+plt.show()
+
+
+plt.plot(difference,'r:' ,label=' log(n!) - log( Stirling Approximation for n ) ')
+plt.ylim(-0.000001,0.000001)
+plt.axhline( y = 0 ,color = 'blue', label = 'zero line')
+plt.xlabel('n')
+plt.legend(loc='best')
+plt.grid()
 plt.show()

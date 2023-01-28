@@ -8,7 +8,7 @@ def Check(method):
 
     def newFunction(ref, *arg, **kwargs):
         try:
-            return method(ref, *arg, **kwargs)
+            method(ref, *arg, **kwargs)
         except Exception as e:
             print(type(e))
             print(e)
@@ -40,7 +40,7 @@ class Dice:
         if ((type(probabilityDistribution) is not tuple)):
             raise Exception('Probability distribution should be in Tuple')
 
-        if len(probabilityDistribution) != self.numSides or round(sum(probabilityDistribution),5) != 1:
+        if len(probabilityDistribution) != self.numSides or round(sum(probabilityDistribution),5) != 1 or (min(probabilityDistribution) < 0) :
             raise Exception('Invalid probability distribution')
 
         self.cdf[0] = probabilityDistribution[0]
@@ -75,14 +75,14 @@ class Dice:
 
         x_axis = np.arange(len(x))
 
-        plt.bar(x_axis - 0.2, facesWithRandomNumber,0.4, label='face with random number',color='blue')
-        plt.bar(x_axis + 0.2, facesWithActualNumber,0.4, label='face with actual number',color='red')
+        plt.bar(x_axis - 0.2, facesWithRandomNumber,0.4, label='random',color='red')
+        plt.bar(x_axis + 0.2, facesWithActualNumber,0.4, label='actual',color='blue')
 
         plt.xticks(x_axis, x)
-        plt.xlabel("Top face of dice")
+        plt.xlabel("sides")
         plt.ylabel("Occurrences")
-        plt.title("Expected and actual number of occurrences of each face")
-        plt.legend()
+        plt.title(f"Outcome of {noOfThrows} throws of a {self.numSides}-faced dice")
+        plt.legend(loc='upper right')
         plt.show()
 
 
