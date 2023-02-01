@@ -22,7 +22,7 @@ class TextGenerator:
     # Initialize the prefix dictionary, total word counter, word to all tuple dictionary, and words list
     def __init__(self) -> None:
         self.prefixDic = dict()
-        self.totalWords = '#ofTotalWords#' # using # at both end to make sure that is not english word
+        self.totalWords = '#ofTotalWords#' # using # at both end to make sure that this is not english word
         self.wordToAllTuple = dict()
         self.wordsList = list()
 
@@ -128,6 +128,13 @@ class TextGenerator:
             # if current tuple is None then finding random tuple with start word as first element
             if curTuple is None:
                 curTuple = getRandomTuple(startWord)
+
+                if curTuple is None:
+                    answer += startWord
+                    answer += ""
+                    startWord = None
+                    continue
+
                 answer += curTuple[0]
                 generated += 1
                 if generated == num: # checking length
@@ -166,4 +173,4 @@ if __name__ == '__main__':
 
     t = TextGenerator()
     t.assimilateText('sherlock.txt')
-    t.generateText(100, 'London')
+    t.generateText(50, 'London')

@@ -37,9 +37,9 @@ class Dice:
 
     # string representation of the dice and overloading print function
     def __str__(self) -> str:
-        return f'Dice with {self.numSides} facesWithRandomNumber and probability distribution {{' + ", ".join(str(x) for x in self.probabilityDistribution) + '}'
+        return f'Dice with {self.numSides} faces and probability distribution {{' + ", ".join(str(x) for x in self.probabilityDistribution) + '}'
 
-    # function to set the probability distribution of the dice
+    # Function to set the probability distribution of the dice
     @Check
     def setProb(self, probabilityDistribution) -> None:
         '''
@@ -101,5 +101,5 @@ class Dice:
 if __name__ == '__main__':
 
     d = Dice(4)
-    d.setProb((0.1, 0.2, 0.3, 0.4))
+    d.setProb((0.1, 0.2, 0.3,0.4))
     d.roll(10000)
