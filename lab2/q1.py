@@ -67,6 +67,8 @@ class UndirectedGraph:
 
         return self
 
+# Private Methods
+
     def __checkNode(self, node) -> bool:
         if node is None or node > self.maxNumVertex or node <= 0:
             return False
@@ -90,6 +92,8 @@ class UndirectedGraph:
         avg = avg / self.numVertex
 
         return degreeDistribution, avg
+
+# Public Methods
 
     @Check
     def addNode(self, node=None) -> None:

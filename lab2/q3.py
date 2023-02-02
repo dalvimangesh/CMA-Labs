@@ -94,6 +94,21 @@ class UndirectedGraph:
 
         return degreeDistribution, avg
 
+    def __BFS(self,start,visited):
+        count = 0
+        q = Queue()
+        q.put(start)
+        visited.add(start)
+        while q.qsize():
+            ele = q.get()
+            count += 1
+            for neighbour in self.adjList[ele]:
+                if neighbour not in visited:
+                    q.put(neighbour)
+                    visited.add(neighbour)
+            
+        return count,visited
+
     @Check
     def addNode(self, node=None) -> None:
 
@@ -141,27 +156,24 @@ class UndirectedGraph:
 
     def isConnected(self) -> bool:
 
-        visited = set()
-
-        q = Queue()
-
         if self.numVertex == 0:
             return True
 
-        start = 1
-        q.put(start)
+        startNode = None
 
-        while q.qsize():
-            ele = q.get()
-            for neighbour in self.adjList[ele]:
-                if neighbour not in visited:
-                    q.put(neighbour)
-                    visited.add(neighbour)
+        for node in self.adjList:
+            startNode = node
+            break
+
+        visited = set()
+
+        self.__BFS(start = startNode,visited=visited)
 
         if len(visited) == self.numVertex:
             return True
 
         return False
+
 
 class ERRandomGraph(UndirectedGraph):
 
@@ -184,11 +196,12 @@ def VerifyErdosRenyi():
     epsilon = 0.002
     p = 0.0
     constant = math.log(100,math.e) / 100
+    limit = 0.1 + epsilon
 
     xPoints = []
     yPoints = []
 
-    while p <= 0.1+epsilon:
+    while p <= limit:
 
         print(p)
 
@@ -218,18 +231,18 @@ def VerifyErdosRenyi():
 
 if __name__ == '__main__':
 
-    # g = UndirectedGraph(5)
-    # g = g + (1, 2)
-    # g = g + (2, 3)
-    # g = g + (3, 4)
-    # g = g + (3, 5)
-    # print(g.isConnected())
+    g = UndirectedGraph(5)
+    g = g + (1, 2)
+    g = g + (2, 3)
+    g = g + (3, 4)
+    g = g + (3, 5)
+    print(g.isConnected())
 
-    # g = UndirectedGraph(5)
-    # g = g + (1, 2)
-    # g = g + (2, 3)
-    # g = g + (3, 5)
-    # print(g.isConnected())
-    # print(g)
+    g = UndirectedGraph(5)
+    g = g + (1, 2)
+    g = g + (2, 3)
+    g = g + (3, 5)
+    print(g.isConnected())
+    print(g)
 
     VerifyErdosRenyi()
