@@ -24,15 +24,14 @@ def Check(inputFunction):
 class UndirectedGraph:
 
     def __init__(self, numVertices=None) -> None:
-
+        
         self.maxNumVertex = inf if numVertices is None else numVertices
         self.isFree = False
         self.adjList = dict()
         self.numVertex = numVertices
         self.numEdges = 0
         if self.maxNumVertex < 0:
-            # Error
-            return
+            raise Exception('Node index cannot exceed number of nodes\n')
 
         if numVertices is None:
             self.isFree = True
@@ -128,8 +127,7 @@ class UndirectedGraph:
             yPoints.append(value)
 
         plt.axvline(x=avg, color='red', label='Avg. node degree')
-        plt.plot(xPoints, yPoints, "ob", color="tab:blue",
-                 label='Actual degree distribution')
+        plt.plot(xPoints, yPoints, "o", color="tab:blue",label='Actual degree distribution')
         plt.grid()
         plt.xlabel('Node degree')
         plt.ylabel('Fraction of Nodes')
