@@ -193,7 +193,7 @@ def VerifyErdosRenyi():
 
     runs = 1000
 
-    epsilon = 0.002
+    epsilon = 0.001
     p = 0.0
     constant = math.log(100,math.e) / 100
     limit = 0.1 + epsilon

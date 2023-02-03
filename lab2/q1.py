@@ -4,8 +4,6 @@ import sys
 global inf
 inf = 1000
 
-# Function to check for any exception in inputFunction
-
 
 def Check(inputFunction):
 
@@ -147,3 +145,8 @@ if __name__ == '__main__':
     g = g + (3, 4)
     g = g + (1, 4)
     g.plotDegDist()
+
+ 
+
+
+

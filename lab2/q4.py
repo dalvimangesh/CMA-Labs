@@ -94,7 +94,7 @@ class UndirectedGraph:
 
         return degreeDistribution, avg
 
-    def __BFS(self,start,visited):
+    def __BFS(self, start, visited):
         count = 0
         q = Queue()
         q.put(start)
@@ -106,8 +106,8 @@ class UndirectedGraph:
                 if neighbour not in visited:
                     q.put(neighbour)
                     visited.add(neighbour)
-            
-        return count,visited
+
+        return count, visited
 
     @Check
     def addNode(self, node=None) -> None:
@@ -167,7 +167,7 @@ class UndirectedGraph:
 
         visited = set()
 
-        self.__BFS(start = startNode,visited=visited)
+        self.__BFS(start=startNode, visited=visited)
 
         if len(visited) == self.numVertex:
             return True
@@ -177,17 +177,18 @@ class UndirectedGraph:
     def oneTwoComponentSizes(self):
 
         visited = set()
-        sizes = [0,0]
+        sizes = [0, 0]
 
         for vertex in self.adjList:
 
             if vertex not in visited:
-                count,visited = self.__BFS(start=vertex,visited=visited)
-                sizes.append(count)   
+                count, visited = self.__BFS(start=vertex, visited=visited)
+                sizes.append(count)
 
         sizes.sort()
 
-        return [sizes[-1],sizes[-2]]
+        return [sizes[-1], sizes[-2]]
+
 
 class ERRandomGraph(UndirectedGraph):
 
@@ -203,16 +204,64 @@ class ERRandomGraph(UndirectedGraph):
                     self.addEdge(u, v)
 
 
+'''
+If p < 0.001, the Erdős-Rényi random graph G(1000, p) will almost surely have only
+small connected components. On the other hand, if p > 0.001, almost surely, there will be
+a single giant component containing a positive fraction of the vertices
+'''
+
+
+def VerifyErdosRenyl():
+
+    runs = 50
+    p = 0.0
+    epsilon = 0.0002
+    limit = 0.01 + epsilon
+    LargestCCThreshold = 1 / 1000
+    ConnectedThreshold = (1 - epsilon) * (math.log(1000)) / 1000
+
+    xPoints = []
+    y1Points = []
+    y2Points = []
+
+    while p <= limit:
+        print(p)
+        countLargest = 0
+        countSecondLargest = 0
+
+        for _ in range(runs):
+
+            g = ERRandomGraph(1000)
+            g.sample(p)
+            sizes = g.oneTwoComponentSizes()
+
+            countLargest += sizes[0]/1000
+            countSecondLargest += sizes[1]/1000
+
+        y1Points.append(countLargest/runs)
+        y2Points.append(countSecondLargest/runs)
+        xPoints.append(p)
+
+        p += epsilon
+
+    plt.plot(xPoints,y1Points,color='green',label='Largest connected component')
+    plt.plot(xPoints,y2Points,color='blue',label='2nd largest connected component')
+    plt.axvline(x=LargestCCThreshold,color='red',label='Largest CC size threshold')
+    plt.axvline(x=ConnectedThreshold,color='tab:orange',label='Connectedness threshold')
+    plt.grid()
+    plt.show()
 
 
 if __name__ == '__main__':
 
-    g = UndirectedGraph(6)
-    g = g + (1, 2)
-    g = g + (3, 4)
-    g = g + (6, 4)
-    print(g.oneTwoComponentSizes())
+    # g = UndirectedGraph(6)
+    # g = g + (1, 2)
+    # g = g + (3, 4)
+    # g = g + (6, 4)
+    # print(g.oneTwoComponentSizes())
 
-    g = ERRandomGraph(100)
-    g.sample(0.01)
-    print(g.oneTwoComponentSizes())
+    # g = ERRandomGraph(100)
+    # g.sample(0.01)
+    # print(g.oneTwoComponentSizes())
+
+    VerifyErdosRenyl()

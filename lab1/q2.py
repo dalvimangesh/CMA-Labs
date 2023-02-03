@@ -101,5 +101,5 @@ class Dice:
 if __name__ == '__main__':
 
     d = Dice(4)
-    d.setProb((0.1, 0.2, 0.3,0.4))
+    d.setProb((0.1, 0.2, 0.3,0.4,0.6))
     d.roll(10000)
