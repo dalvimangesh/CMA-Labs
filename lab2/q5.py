@@ -59,7 +59,7 @@ class Lattice:
 
         self.__removeAllEdges()
 
-        dx, dy = [1, 0, -1, 0], [0, 1, 0, -1]
+        dx, dy = [1,0], [0,-1]
 
         def isValidPoint(i, j) -> bool:
             if i < 0 or j < 0 or i >= self.n or j >= self.n:
@@ -67,7 +67,7 @@ class Lattice:
             return True
 
         for u, v in self.graph.nodes():
-            for i in range(4):
+            for i in range(2):
                 newx, newy = dx[i] + u, dy[i] + v
                 randNum = random()
                 if isValidPoint(newx, newy):
@@ -99,6 +99,6 @@ class Lattice:
 if __name__ == '__main__':
 
     l = Lattice(100)
-    l.percolate(0.4)
+    l.percolate(1)
     l.showPaths()
-    print(l.existsTopDownPath())
+    # print(l.existsTopDownPath())
