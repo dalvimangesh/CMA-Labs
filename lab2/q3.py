@@ -167,7 +167,7 @@ class UndirectedGraph:
 
         visited = set()
 
-        self.__BFS(start = startNode,visited=visited)
+        _,visited = self.__BFS(start = startNode,visited=visited)
 
         if len(visited) == self.numVertex:
             return True
@@ -214,7 +214,7 @@ def VerifyErdosRenyi():
                 count += 1
 
         xPoints.append(p)
-        yPoints.append(count/1000)
+        yPoints.append(count/runs)
 
         p += epsilon
 
