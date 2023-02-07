@@ -2,6 +2,8 @@ import networkx as nx
 import matplotlib.pyplot as plt
 from random import random
 
+def Check():
+    pass
 
 class Lattice:
 
