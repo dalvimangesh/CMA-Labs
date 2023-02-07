@@ -2,8 +2,10 @@ import networkx as nx
 import matplotlib.pyplot as plt
 from random import random
 
+
 def Check():
     pass
+
 
 class Lattice:
 
@@ -20,10 +22,9 @@ class Lattice:
 
     def __removeAllEdges(self):
         nodes = self.graph.edges()
-        for u, v in nodes:
-            self.graph.remove_edge(u, v)
+        for u, v in nodes: self.graph.remove_edge(u, v)
 
-    def __BFS(self, start) -> bool:
+    def __BFS(self, start, drawEdges=True) -> bool:
 
         bfs_tree = nx.bfs_tree(self.graph, start)
 
@@ -45,12 +46,12 @@ class Lattice:
             if edges[i][0] == self.n-1 or edges[i+1][0] == self.n-1:  # checking if path exists
                 flag = True
 
-        pos = dict(((x, y), (y, -x)) for x, y in self.graph.nodes())
-        nx.draw_networkx_edges(self.graph, pos=pos, edgelist=edgeList, edge_color='green')
+        if drawEdges:
+            pos = dict(((x, y), (y, -x)) for x, y in self.graph.nodes())
+            nx.draw_networkx_edges(self.graph, pos=pos, edgelist=edgeList, edge_color='green')
         return flag
 
 # Public
-
 
     def show(self, plot=True):
         pos = dict(((x, y), (y, -x)) for x, y in self.graph.nodes())
@@ -62,7 +63,7 @@ class Lattice:
 
         self.__removeAllEdges()
 
-        dx, dy = [1,0], [0,-1]
+        dx, dy = [1, 0], [0, -1]
 
         def isValidPoint(i, j) -> bool:
             if i < 0 or j < 0 or i >= self.n or j >= self.n:
@@ -82,7 +83,7 @@ class Lattice:
         u = 0
         for v in range(self.n):
             # print(v)
-            if self.__BFS((u, v)):
+            if self.__BFS((u, v), drawEdges=False):
                 return True
         return False
 
@@ -102,6 +103,6 @@ class Lattice:
 if __name__ == '__main__':
 
     l = Lattice(100)
-    l.percolate(1)
+    l.percolate(0.6)
     l.showPaths()
     # print(l.existsTopDownPath())
