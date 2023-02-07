@@ -3,14 +3,20 @@ import matplotlib.pyplot as plt
 
 def VarifyBondPercolation():
 
-    p = 0.0
+    '''
+    to verify : A path exists (almost surely) from the top-most layer to the bottom-most 
+    layer of a 100*100 grid graph only if the bond percolation probability exceeds 0.5
+    '''
+
+    p = 0.0 # to iterate over all probability
     epsilon = 0.02 # small value
-    runs = 50
+    runs = 50 # Number of runs for each probability
     limit = 1
 
     xPoints = []
     yPoints = []
 
+    # Running loop until p reaches limit , increating value in p by epsilon in each interation
     while p <= limit:
 
         print('P = ',p)

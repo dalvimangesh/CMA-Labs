@@ -39,7 +39,7 @@ class Lattice:
         for u, v in nodes: self.graph.remove_edge(u, v)
         self.pos = dict(((x, y), (y, -x)) for x, y in self.graph.nodes())
 
-    def __BFS(self, start, drawEdges=True) -> bool:
+    def __BFS(self, start, drawEdges=True) -> None:
 
         bfs_tree = nx.bfs_tree(self.graph, start) # doing bfs on graph using inbuilt function
 
@@ -55,7 +55,7 @@ class Lattice:
 
         # edges in in the shortest path of longest distance vertex
         edges = nx.shortest_path(bfs_tree, start, source)
-        flag = False # stores True if there is path from start vertex to last row
+        
         edgeList = []
 
         for i in range(len(edges)-1):
@@ -67,8 +67,6 @@ class Lattice:
 
         if drawEdges:
             nx.draw_networkx_edges(self.graph, pos=self.pos, edgelist=edgeList, edge_color='green')
-        
-        return flag # returning true if current bfs is reaching to last row nodes
 
 # Public
 
@@ -104,10 +102,12 @@ class Lattice:
 
     # function  returns true if there a path from first row to last row
     def existsTopDownPath(self):
-        u = 0
-        for v in range(self.n):
-            if self.__BFS((u, v), drawEdges=False):
-                return True
+
+        for i in range(self.n):
+            for j in range(self.n):
+                if nx.has_path(self.graph,(0,i),(self.n-1,j)):
+                    return True
+
         return False
 
     '''
@@ -126,7 +126,7 @@ class Lattice:
 
 if __name__ == '__main__':
 
-    l = Lattice(10)
+    l = Lattice(100)
     l.percolate(0.7)
     l.showPaths()
     # print(l.existsTopDownPath())
