@@ -71,8 +71,7 @@ class UndirectedGraph:
             self.addEdge(val[0], val[1])
 
         else:
-            raise Exception(
-                'addition possible only with integer or tuple of length 2')
+            raise Exception('addition possible only with integer or tuple of length 2')
 
         return self
 
