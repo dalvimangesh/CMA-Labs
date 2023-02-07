@@ -84,7 +84,8 @@ class Lattice:
 
         self.__removeAllEdges()
 
-        dx, dy = [1, 0], [0, -1] # to avoid double counting 
+        # to avoid double counting , adding to bottom and left
+        dx, dy = [1, 0], [0, -1] 
 
         def isValidPoint(i, j) -> bool:
             if i < 0 or j < 0 or i >= self.n or j >= self.n:

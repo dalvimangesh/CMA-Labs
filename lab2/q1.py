@@ -56,8 +56,8 @@ class UndirectedGraph:
 
     '''
     overloaing '+' operator
-    g = g + 10
-    g = g + (12, 15)
+    >>> g = g + 10
+    >>> g = g + (12, 15)
     '''
     def __add__(self, val=None) -> None:
 
