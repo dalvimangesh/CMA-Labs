@@ -8,8 +8,6 @@ global inf
 inf = 1000
 
 # Function to check for any exception in inputFunction
-
-
 def Check(inputFunction):
 
     # Function to handle the exception

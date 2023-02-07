@@ -2,14 +2,12 @@ import matplotlib.pyplot as plt
 from random import random
 from queue import Queue
 import math
-
 import sys
+
 global inf
 inf = 1000
 
 # Function to check for any exception in inputFunction
-
-
 def Check(inputFunction):
 
     # Function to handle the exception

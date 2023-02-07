@@ -1,10 +1,10 @@
 import matplotlib.pyplot as plt
-
 import sys
+
 global inf
-inf = 1000
+inf = 100000
 
-
+# Function to check for any exception in inputFunction
 def Check(inputFunction):
 
     # Function to handle the exception
@@ -21,13 +21,15 @@ def Check(inputFunction):
 
 class UndirectedGraph:
 
+    # Assuming in free graph there can be max inf vertex
+    @Check
     def __init__(self, numVertices=None) -> None:
         
         self.maxNumVertex = inf if numVertices is None else numVertices
-        self.isFree = False
-        self.adjList = dict()
-        self.numVertex = numVertices
-        self.numEdges = 0
+        self.isFree = False # to store graph is free not
+        self.adjList = dict() # adjacency list
+        self.numVertex = numVertices # number of vertex present
+        self.numEdges = 0 # number of edges present
         if self.maxNumVertex < 0:
             raise Exception('Node index cannot exceed number of nodes\n')
 
@@ -35,10 +37,11 @@ class UndirectedGraph:
             self.isFree = True
             self.numVertex = 0
 
-        if not self.isFree:
+        if not self.isFree: # creating adjList for each node if graph is not free
             for i in range(1, self.maxNumVertex+1):
                 self.adjList[i] = set()
 
+    # to function the whole graph in given format
     def __str__(self) -> str:
 
         info = f"Graph with {self.numVertex} nodes and {self.numEdges} edges. Neighbours of the nodes are belows:\n"
@@ -51,6 +54,11 @@ class UndirectedGraph:
 
         return info
 
+    '''
+    overloaing '+' operator
+    g = g + 10
+    g = g + (12, 15)
+    '''
     def __add__(self, val=None) -> None:
 
         if type(val) is int:
@@ -67,18 +75,23 @@ class UndirectedGraph:
 
 # Private Methods
 
+    # function to check if node is valid is or not
     def __checkNode(self, node) -> bool:
         if node is None or node > self.maxNumVertex or node <= 0:
             return False
         return True
 
+    # Function returns degreeDistribution for each degree and avgerage degreeDistribution
     def __findFractionDegree(self):
 
         degreeDistribution = dict()
         avg = 0
 
+        # Max degree can be numVertex-1, initializing all possible degree to zero
         for degree in range(self.numVertex):
             degreeDistribution[degree] = 0
+
+        # Finding degree distribution
 
         for _, value in self.adjList.items():
             degreeDistribution[len(value)] += 1
@@ -93,6 +106,7 @@ class UndirectedGraph:
 
 # Public Methods
 
+    # function to add node in current graph if it is valid
     @Check
     def addNode(self, node=None) -> None:
 
@@ -103,6 +117,7 @@ class UndirectedGraph:
             self.adjList[node] = set()
             self.numVertex += 1
 
+    # function to add edge in current graph if it is valid
     @Check
     def addEdge(self, u=None, v=None):
 
@@ -111,13 +126,12 @@ class UndirectedGraph:
 
         self.adjList[u].add(v)
         self.adjList[v].add(u)
-
         self.numEdges += 1
-
-        return
 
     @Check
     def plotDegDist(self):
+        
+        # plotting the degree distribution 1 of a graph
 
         degreeDistribution, avg = self.__findFractionDegree()
 
@@ -129,7 +143,7 @@ class UndirectedGraph:
             yPoints.append(value)
 
         plt.axvline(x=avg, color='red', label='Avg. node degree')
-        plt.plot(xPoints, yPoints, "o", color="tab:blue",label='Actual degree distribution')
+        plt.plot(xPoints, yPoints, ".", color="tab:blue",label='Actual degree distribution')
         plt.grid()
         plt.xlabel('Node degree')
         plt.ylabel('Fraction of Nodes')
@@ -145,8 +159,3 @@ if __name__ == '__main__':
     g = g + (3, 4)
     g = g + (1, 4)
     g.plotDegDist()
-
- 
-
-
-

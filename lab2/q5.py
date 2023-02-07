@@ -3,7 +3,7 @@ import matplotlib.pyplot as plt
 from random import random
 import sys
 
-
+# Function to check for any exception in inputFunction
 def Check(inputFunction):
 
     # Function to handle the exception
