@@ -3,9 +3,10 @@ import matplotlib.pyplot as plt
 
 def Varify():
 
+    
     p = 0.0
     epsilon = 0.05
-    runs = 1
+    runs = 10
 
     limit = 1
     xPoints = []
