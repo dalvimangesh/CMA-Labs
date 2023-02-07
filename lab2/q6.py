@@ -35,7 +35,7 @@ def VarifyBondPercolation():
 
         p += epsilon # increating p by small value
 
-    plt.plot(xPoints,yPoints)
+    plt.plot(xPoints,yPoints,"b")
     plt.title('Critical cut-off in 2-D bond percolation')
     plt.xlabel('p')
     plt.ylabel('Fraction of runs end-to-end percolation occurred')

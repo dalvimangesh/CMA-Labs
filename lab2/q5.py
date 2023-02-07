@@ -39,12 +39,12 @@ class Lattice:
         for u, v in nodes: self.graph.remove_edge(u, v)
         self.pos = dict(((x, y), (y, -x)) for x, y in self.graph.nodes())
 
-    def __BFS(self, start, drawEdges=True) -> None:
+    def __BFS(self, start) -> None:
 
         bfs_tree = nx.bfs_tree(self.graph, start) # doing bfs on graph using inbuilt function
 
         source = None # to store longest path vertex
-        length = 0 # to store longest distance
+        length = -1 # to store longest distance
 
         # getting the longest path vertex by comparing distance from start node
         for node in bfs_tree.nodes():
@@ -53,7 +53,7 @@ class Lattice:
                 length = curDis
                 source = node
 
-        # edges in in the shortest path of longest distance vertex
+        # edges in the shortest path of longest distance vertex
         edges = nx.shortest_path(bfs_tree, start, source)
         
         edgeList = []
@@ -61,12 +61,7 @@ class Lattice:
         for i in range(len(edges)-1):
             edgeList.append((edges[i], edges[i+1]))
 
-            # checking if path exists to last row
-            if edges[i][0] == self.n-1 or edges[i+1][0] == self.n-1:
-                flag = True
-
-        if drawEdges:
-            nx.draw_networkx_edges(self.graph, pos=self.pos, edgelist=edgeList, edge_color='green')
+        nx.draw_networkx_edges(self.graph, pos=self.pos, edgelist=edgeList, edge_color='green')
 
 # Public
 
