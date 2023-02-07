@@ -1,14 +1,14 @@
 from q1 import UndirectedGraph
 from random import random
 
-
+# derived class from UndirectedGraph Class to create a Erdos-Renyi random graph G(n, p)
 class ERRandomGraph(UndirectedGraph):
 
     def __init__(self, numVertices=None) -> None:
         super().__init__(numVertices)
 
     def sample(self, probability):
-
+        
         for u in range(1, self.numVertex+1):
             for v in range(u+1, self.numVertex+1):
                 randNum = random()
