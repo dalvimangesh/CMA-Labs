@@ -28,6 +28,7 @@ class ERRandomGraph(UndirectedGraph):
 
 
 if __name__ == '__main__':
-    g = ERRandomGraph(100)
-    g.sample(0.7)
+    
+    g = ERRandomGraph(1000)
+    g.sample(0.4)
     g.plotDegDist()

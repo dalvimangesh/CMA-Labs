@@ -234,7 +234,7 @@ def VerifyErdosRenyi():
 
     # Running loop until p reaches limit , increating value in p by epsilon in each interation
     while p <= limit:
-
+        
         count = 0
 
         for _ in range(runs):
@@ -262,18 +262,11 @@ def VerifyErdosRenyi():
 
 if __name__ == '__main__':
 
-    g = UndirectedGraph(5)
-    g = g + (1, 2)
-    g = g + (2, 3)
-    g = g + (3, 4)
-    g = g + (3, 5)
-    print(g.isConnected())
-
-    g = UndirectedGraph(5)
-    g = g + (1, 2)
-    g = g + (2, 3)
-    g = g + (3, 5)
-    print(g.isConnected())
-    print(g)
+    # g = UndirectedGraph(5)
+    # g = g + (1, 2)
+    # g = g + (2, 3)
+    # g = g + (3, 5)
+    # print(g.isConnected())
+    # print(g)
 
     VerifyErdosRenyi()

@@ -143,7 +143,7 @@ class UndirectedGraph:
             yPoints.append(value)
 
         plt.axvline(x=avg, color='red', label='Avg. node degree')
-        plt.plot(xPoints, yPoints, ".", color="tab:blue",label='Actual degree distribution')
+        plt.plot(xPoints, yPoints, ".", color="b",label='Actual degree distribution')
         plt.grid()
         plt.xlabel('Node degree')
         plt.ylabel('Fraction of Nodes')
@@ -154,8 +154,11 @@ class UndirectedGraph:
 
 if __name__ == '__main__':
 
-    g = UndirectedGraph(5)
+    g = UndirectedGraph()
+    g = g + 100
     g = g + (1, 2)
-    g = g + (3, 4)
-    g = g + (1, 4)
+    g = g + (1, 100)
+    g = g + (100, 3)
+    g = g + 20
+
     g.plotDegDist()

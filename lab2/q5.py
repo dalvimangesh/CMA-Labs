@@ -44,15 +44,14 @@ class Lattice:
         bfs_tree = nx.bfs_tree(self.graph, start) # doing bfs on graph using inbuilt function
 
         source = None # to store longest path vertex
-        length = -1 # to store longest distance
+        deep = -1 # to store longest distance
 
-        # getting the longest path vertex by comparing distance from start node
+        # getting the deepest vertex by comparing coordinate with from start node
         for node in bfs_tree.nodes():
-            curDis = nx.shortest_path_length(bfs_tree, start, node)
-            if curDis > length:
-                length = curDis
+            if node[0] > deep:
+                deep = node[0]
                 source = node
-
+        
         # edges in the shortest path of longest distance vertex
         edges = nx.shortest_path(bfs_tree, start, source)
         
@@ -95,7 +94,7 @@ class Lattice:
         
         self.pos = dict(((x, y), (y, -x)) for x, y in self.graph.nodes())
 
-    # function  returns true if there a path from first row to last row
+    # function  returns true if there a path from first row to last rowf
     def existsTopDownPath(self):
 
         for i in range(self.n):
@@ -114,7 +113,7 @@ class Lattice:
         self.show(False)
         u = 0
         for v in range(self.n):
-            print(v)
+            
             self.__BFS((u, v))
         plt.show()
 
@@ -124,4 +123,3 @@ if __name__ == '__main__':
     l = Lattice(100)
     l.percolate(0.7)
     l.showPaths()
-    # print(l.existsTopDownPath())
