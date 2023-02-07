@@ -49,6 +49,7 @@ class Lattice:
 
 # Public
 
+
     def show(self, plot=True):
         pos = dict(((x, y), (y, -x)) for x, y in self.graph.nodes())
         nx.draw(self.graph, pos, with_labels=False, node_color='blue', node_size=0.30, edge_color='red')
