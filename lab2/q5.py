@@ -37,6 +37,7 @@ class Lattice:
     def __removeAllEdges(self):
         nodes = self.graph.edges()
         for u, v in nodes: self.graph.remove_edge(u, v)
+        self.pos = dict(((x, y), (y, -x)) for x, y in self.graph.nodes())
 
     def __BFS(self, start, drawEdges=True) -> bool:
 
@@ -65,8 +66,7 @@ class Lattice:
                 flag = True
 
         if drawEdges:
-            pos = dict(((x, y), (y, -x)) for x, y in self.graph.nodes())
-            nx.draw_networkx_edges(self.graph, pos=pos, edgelist=edgeList, edge_color='green')
+            nx.draw_networkx_edges(self.graph, pos=self.pos, edgelist=edgeList, edge_color='green')
         
         return flag # returning true if current bfs is reaching to last row nodes
 
@@ -74,8 +74,7 @@ class Lattice:
 
     # function to plot current graph
     def show(self, plot=True):
-        pos = dict(((x, y), (y, -x)) for x, y in self.graph.nodes())
-        nx.draw(self.graph, pos, with_labels=False, node_color='blue', node_size=0.30, edge_color='red')
+        nx.draw(self.graph, self.pos, with_labels=False, node_color='blue', node_size=0.30, edge_color='red')
         if plot:
             plt.show()
 
@@ -100,6 +99,8 @@ class Lattice:
                 if isValidPoint(newx, newy):
                     if randNum < p:
                         self.graph.add_edge((u, v), (newx, newy))
+        
+        self.pos = dict(((x, y), (y, -x)) for x, y in self.graph.nodes())
 
     # function  returns true if there a path from first row to last row
     def existsTopDownPath(self):
@@ -125,7 +126,7 @@ class Lattice:
 
 if __name__ == '__main__':
 
-    l = Lattice(100)
-    l.percolate(0.6)
+    l = Lattice(10)
+    l.percolate(0.7)
     l.showPaths()
     # print(l.existsTopDownPath())

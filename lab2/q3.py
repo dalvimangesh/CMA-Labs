@@ -225,7 +225,7 @@ def VerifyErdosRenyi():
     epsilon = 0.001 # small value
     p = 0.0 # to iterate over all probability
 
-    # The theoretical threshold which is ln(100) / 100
+    # The theoretical threshold which is ln(n) / n
     constant = math.log(100,math.e) / 100
     limit = 0.1 + epsilon
 

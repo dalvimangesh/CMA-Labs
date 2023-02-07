@@ -2,8 +2,8 @@ import matplotlib.pyplot as plt
 from random import random
 from queue import Queue
 import math
-
 import sys
+
 global inf
 inf = 1000
 
@@ -24,13 +24,15 @@ def Check(inputFunction):
 
 class UndirectedGraph:
 
+    # Assuming in free graph there can be max inf vertex
+    @Check
     def __init__(self, numVertices=None) -> None:
 
         self.maxNumVertex = inf if numVertices is None else numVertices
-        self.isFree = False
-        self.adjList = dict()
-        self.numVertex = numVertices
-        self.numEdges = 0
+        self.isFree = False # to store graph is free not
+        self.adjList = dict() # adjacency list
+        self.numVertex = numVertices # number of vertex present
+        self.numEdges = 0 # number of edges present
         if self.maxNumVertex < 0:
             raise Exception('Node index cannot exceed number of nodes\n')
 
@@ -38,10 +40,11 @@ class UndirectedGraph:
             self.isFree = True
             self.numVertex = 0
 
-        if not self.isFree:
+        if not self.isFree: # creating adjList for each node if graph is not free
             for i in range(1, self.maxNumVertex+1):
                 self.adjList[i] = set()
 
+    # to function the whole graph in given format
     def __str__(self) -> str:
 
         info = f"Graph with {self.numVertex} nodes and {self.numEdges} edges. Neighbours of the nodes are belows:\n"
@@ -54,6 +57,11 @@ class UndirectedGraph:
 
         return info
 
+    '''
+    overloaing '+' operator
+    >>> g = g + 10
+    >>> g = g + (12, 15)
+    '''
     def __add__(self, val=None) -> None:
 
         if type(val) is int:
@@ -68,18 +76,25 @@ class UndirectedGraph:
 
         return self
 
+#Private Methods
+
+    # function to check if node is valid is or not
     def __checkNode(self, node) -> bool:
         if node is None or node > self.maxNumVertex or node <= 0:
             return False
         return True
 
+    # Function returns degreeDistribution for each degree and avgerage degreeDistribution
     def __findFractionDegree(self):
 
         degreeDistribution = dict()
         avg = 0
 
+        # Max degree can be numVertex-1, initializing all possible degree to zero
         for degree in range(self.numVertex):
             degreeDistribution[degree] = 0
+
+        # Finding degree distribution
 
         for _, value in self.adjList.items():
             degreeDistribution[len(value)] += 1
@@ -93,6 +108,12 @@ class UndirectedGraph:
         return degreeDistribution, avg
 
     def __BFS(self, start, visited):
+
+        '''
+        Function to do bfs from start vertex and using current visited set
+        return number of vertex visited and which are visited
+        '''
+
         count = 0
         q = Queue()
         q.put(start)
@@ -107,6 +128,9 @@ class UndirectedGraph:
 
         return count, visited
 
+#Public Methods
+
+    # function to add node in current graph if it is valid
     @Check
     def addNode(self, node=None) -> None:
 
@@ -117,6 +141,7 @@ class UndirectedGraph:
             self.adjList[node] = set()
             self.numVertex += 1
 
+    # function to add edge in current graph if it is valid
     @Check
     def addEdge(self, u=None, v=None):
 
@@ -132,6 +157,8 @@ class UndirectedGraph:
 
     @Check
     def plotDegDist(self):
+
+        # plotting the degree distribution 1 of a graph
 
         degreeDistribution, avg = self.__findFractionDegree()
 
@@ -152,6 +179,7 @@ class UndirectedGraph:
         plt.legend()
         plt.show()
 
+    # function returns true if graph is connected ( checks using BFS )
     def isConnected(self) -> bool:
 
         if self.numVertex == 0:
@@ -165,13 +193,15 @@ class UndirectedGraph:
 
         visited = set()
 
-        self.__BFS(start=startNode, visited=visited)
+        self.__BFS(start=startNode, visited=visited) # doing BFS
 
+        # if all vertex get visited means it is connected
         if len(visited) == self.numVertex:
             return True
 
         return False
 
+    # Function to return size of largest and second largest component in graph
     def oneTwoComponentSizes(self):
 
         visited = set()
@@ -187,41 +217,47 @@ class UndirectedGraph:
 
         return [sizes[-1], sizes[-2]]
 
-
+# derived class from UndirectedGraph Class to create a Erdos-Renyi random graph
 class ERRandomGraph(UndirectedGraph):
 
     def __init__(self, numVertices=None) -> None:
         super().__init__(numVertices)
 
+    # Generates a random graph with given probability p
     def sample(self, probability):
 
         for u in range(1, self.numVertex+1):
             for v in range(u+1, self.numVertex+1):
                 randNum = random()
+                # adding edge with given probability
                 if (randNum < probability):
                     self.addEdge(u, v)
 
 
-'''
-If p < 0.001, the Erdős-Rényi random graph G(1000, p) will almost surely have only
-small connected components. On the other hand, if p > 0.001, almost surely, there will be
-a single giant component containing a positive fraction of the vertices
-'''
-
-
 def VerifyErdosRenyl():
 
-    runs = 50
-    p = 0.0
-    epsilon = 0.0002
+    '''
+    to verify : If p < 0.001, the Erdős-Rényi random graph G(1000, p) will almost surely have only
+    small connected components. On the other hand, if p > 0.001, almost surely, there will be
+    a single giant component containing a positive fraction of the vertices
+    '''
+
+    runs = 50 # Number of runs for each probability
+    p = 0.0  # to iterate over all probability
+    epsilon = 0.0002 # small value
     limit = 0.01 + epsilon
-    LargestCCThreshold = 1 / 1000
-    ConnectedThreshold = (1 - epsilon) * (math.log(1000)) / 1000
+
+    # The theoretical threshold for largest connected component which is 1 / n
+    largestCCThreshold = 1 / 1000
+
+    # The theoretical Connectedness threshold which is log(n) / n
+    connectedThreshold = (1 - epsilon) * (math.log(1000,math.e)) / 1000
 
     xPoints = []
     y1Points = []
     y2Points = []
 
+    # Running loop until p reaches limit , increating value in p by epsilon in each interation
     while p <= limit:
         print(p)
         countLargest = 0
@@ -235,8 +271,10 @@ def VerifyErdosRenyl():
 
             countLargest += sizes[0]/1000
             countSecondLargest += sizes[1]/1000
-
+        
+        # fraction for Largest connected component
         y1Points.append(countLargest/runs)
+        # fraction for 2nd largest connected component
         y2Points.append(countSecondLargest/runs)
         xPoints.append(p)
 
@@ -244,8 +282,8 @@ def VerifyErdosRenyl():
 
     plt.plot(xPoints,y1Points,color='green',label='Largest connected component')
     plt.plot(xPoints,y2Points,color='blue',label='2nd largest connected component')
-    plt.axvline(x=LargestCCThreshold,color='red',label='Largest CC size threshold')
-    plt.axvline(x=ConnectedThreshold,color='tab:orange',label='Connectedness threshold')
+    plt.axvline(x=largestCCThreshold,color='red',label='Largest CC size threshold')
+    plt.axvline(x=connectedThreshold,color='tab:orange',label='Connectedness threshold')
     plt.grid()
     plt.show()
 

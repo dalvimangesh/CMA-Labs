@@ -4,7 +4,7 @@ import matplotlib.pyplot as plt
 def VarifyBondPercolation():
 
     p = 0.0
-    epsilon = 0.05 # small value
+    epsilon = 0.02 # small value
     runs = 50
     limit = 1
 
