@@ -243,7 +243,7 @@ def VerifyErdosRenyl():
 
     runs = 50 # Number of runs for each probability
     p = 0.0  # to iterate over all probability
-    epsilon = 0.0002 # small value
+    epsilon = 0.0001 # small value
     limit = 0.01 + epsilon
 
     # The theoretical threshold for largest connected component which is 1 / n
@@ -258,7 +258,7 @@ def VerifyErdosRenyl():
 
     # Running loop until p reaches limit , increating value in p by epsilon in each interation
     while p <= limit:
-        print(p)
+        
         countLargest = 0
         countSecondLargest = 0
 
@@ -284,6 +284,10 @@ def VerifyErdosRenyl():
     plt.axvline(x=largestCCThreshold,color='red',label='Largest CC size threshold')
     plt.axvline(x=connectedThreshold,color='tab:orange',label='Connectedness threshold')
     plt.grid()
+    plt.legend()
+    plt.xlabel('p')
+    plt.ylabel('Fraction of nodes')
+    plt.title('Fraction of nodes in the largest and second-largest\n connected components (CC) of G(1000, p) as function of p')
     plt.show()
 
 

@@ -19,8 +19,6 @@ def VarifyBondPercolation():
     # Running loop until p reaches limit , increating value in p by epsilon in each interation
     while p <= limit:
 
-        print('P = ',p)
-
         count = 0
 
         for _ in range(runs):
