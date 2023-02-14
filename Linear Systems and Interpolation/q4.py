@@ -91,6 +91,7 @@ class Polynomial:
                 res += ('+' + str(round(value,2)) + 'x' + self.__get_superscript(power)) if round(value,2) >= 0 else (str(round(value,2)) + 'x' + self.__get_superscript(power))
         if res == "" :res = str(0)
         return res
+        
 # Public
 
     def show(self,low,high,toShow=True):
@@ -156,7 +157,6 @@ class Polynomial:
                 dR = dR * ( xPoints[j] - xPoints[i] )
 
             p = p + ( (yPoints[j]/dR) * nR )
-            print(p)
 
         plt.plot(xPoints,yPoints,"o",color='red')
         p.show(low,high,toShow=False)
