@@ -131,17 +131,13 @@ class Polynomial:
 
     def fitViaLagrangePoly(self,points):
 
-        A,b = [],[]
         xPoints = []
         yPoints = []
         low = 1000000
         high = -1000000
 
         for x,y in points:
-            A.append([x**i for i in range(len(points))])
-            b.append(y)
-            low = min(low,x)
-            high = max(high,x)
+            low,high = min(low,x),max(high,x)
             xPoints.append(x)
             yPoints.append(y)
 
