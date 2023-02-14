@@ -2,7 +2,7 @@ from q2 import SquareMatrixFloat
 from random import randint
 import matplotlib.pyplot as plt
 
-def visualizeConvergence(dia=10, iterations = 30 ):
+def visualizeConvergence(dia=10, iterations = 30):
 
     matrix = SquareMatrixFloat(dia)
     matrix.sampleSymmetric()

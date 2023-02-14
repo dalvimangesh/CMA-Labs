@@ -18,13 +18,13 @@ class SquareMatrixFloat:
             res += str(row) + '\n'
         return res
 
-    def sampleSymmetric(self):
+    def sampleSymmetric(self) -> None:
 
         for i in range(0, self.n):
             for j in range(i, self.n):
                 self.squareMatrix[i][j] = self.squareMatrix[j][i] = uniform(0, self.n) if i == j else uniform(0, 1)
 
-    def toRowEchelonForm(self):
+    def toRowEchelonForm(self) -> None:
 
         x, y = 0, 0
 
