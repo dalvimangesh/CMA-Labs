@@ -98,5 +98,4 @@ if __name__ == '__main__':
     r1 = RowVectorFloat([1, 2 , 4])
     r2 = RowVectorFloat([1, 1 , 1])
     r3 = 2*r1 + (-3)*r2
-    print(r3)
     print(r2.sum())

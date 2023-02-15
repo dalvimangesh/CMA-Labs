@@ -10,7 +10,7 @@ def true(x):
 # Define the function that will update the plot for each frame of the animation
 def update(frameNum):
     
-    xPoints = np.linspace(-5, 5, frameNum)
+    xPoints = np.linspace(-4, 4, frameNum)
     yPoints = true(xPoints)
 
     # Calculating the true function values for the x-axis
@@ -47,5 +47,5 @@ if __name__ == '__main__':
     ax.set_xlim(0, 1)
     ax.set_ylim(-4, 4)
     animation = FuncAnimation(fig, update, frames=points)
-    # animation.save('q5.gif')
+    #animation.save('q5.gif')
     plt.show() # result

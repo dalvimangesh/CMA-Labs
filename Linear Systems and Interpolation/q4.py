@@ -255,7 +255,7 @@ class Polynomial:
         # display a plot with the given points and the computed polynomial
         plt.plot(xPoints, yPoints, "o", color='red')
         p.show(low, high, toShow=False)
-        plt.title('Polynomial interpolation using matrix method ' + p.__getTitle())
+        plt.title('Polynomial interpolation using lagrange method ' + p.__getTitle())
         plt.xlabel('x')
         plt.ylabel('f̃(x)')
         plt.show()
@@ -264,6 +264,15 @@ if __name__=='__main__':
 
     # p = Polynomial([1, 2, 3])
     # print(p[2])
+    # p = Polynomial([])
+    # p.fitViaMatrixMethod([(1,4), (0,1), (-1, 0), (2, 15), (3,12)])
+    # p.fitViaLagrangePoly([(1,-4), (0,1), (-1, 4), (2, 4), (3,1)])
+
+    # p = Polynomial([1, -1, 1, -1])
+    # p.show(-1, 2)
+
+    # p = Polynomial([])
+    # p.fitViaMatrixMethod([(1,4), (0,1), (-1, 0), (2, 15), (3,12)])
+
     p = Polynomial([])
-    p.fitViaMatrixMethod([(1,4), (0,1), (-1, 0), (2, 15), (3,12)])
-    p.fitViaLagrangePoly([(1,-4), (0,1), (-1, 4), (2, 4), (3,1)])
+    p.fitViaLagrangePoly([(1,-4), (0,1), (-1, 4), (2, 4),(3,1)])

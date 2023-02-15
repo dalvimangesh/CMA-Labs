@@ -2,7 +2,7 @@ from q2 import SquareMatrixFloat
 from random import randint
 import matplotlib.pyplot as plt
 
-def visualizeConvergence(dia=10, iterations = 30):
+def visualizeConvergence(dia=10, iterations = 50):
 
     '''
     function to visualize rate of convergence of Jacobi and Gauss-Siedel methods 
@@ -30,6 +30,7 @@ def visualizeConvergence(dia=10, iterations = 30):
     plt.plot(xPoints, y2Points,label='Gauss-Siedel method')
     plt.xlabel('No of iterations')
     plt.ylabel('||Ax⁽ᵏ⁾ - b||₂')
+    plt.title('rate of convergence of Jacobi and Gauss-Siedel')
     plt.legend(frameon=True, fontsize=11)
     plt.grid()
     plt.show()
