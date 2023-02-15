@@ -11,7 +11,7 @@ def sample_function(x):
 x = np.linspace(0, 1, 10000)
 
 # Generate a list of the number of points to sample for the animation
-n_values = np.arange(5, 1000, 5)
+n_values = np.arange(5, 100, 5)
 
 # Define the figure and axes for the animation
 fig, ax = plt.subplots()
@@ -32,7 +32,7 @@ ax.set_ylim(-4,4)
 # Define the function that will update the plot for each frame of the animation
 def update(n_points):
     # Sample the function
-    x_sample = np.linspace(-5, 5, n_points)
+    x_sample = np.linspace(-3, 3, n_points)
     y_sample = sample_function(x_sample)
 
     # Calculate the true function values for the x-axis

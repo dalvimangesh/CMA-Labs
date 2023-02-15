@@ -1,6 +1,20 @@
 import numpy as np
 import matplotlib.pyplot as plt
+import sys
 
+# Function to check for any exception in inputFunction
+def Check(inputFunction):
+
+    # Function to handle the exception
+    def newFunction(ref, *arg, **kwargs):
+        try:
+            return inputFunction(ref, *arg, **kwargs)
+        except Exception as e:
+            print(type(e))
+            print(e)
+            sys.exit(-1)
+
+    return newFunction
 
 class Polynomial:
 
@@ -206,5 +220,5 @@ class Polynomial:
 
 
 p = Polynomial([0, 1, -1, 3])
-# p.fitViaLagrangePoly([(1, -4), (0, 1), (-1, 4), (2, 4), (3, 1)])
+p.fitViaLagrangePoly([(1, -4), (0, 1), (-1, 4), (2, 4), (10, 1)])
 p.show(1, 2)
