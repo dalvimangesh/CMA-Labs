@@ -160,5 +160,4 @@ if __name__ == '__main__':
     g = g + (1, 100)
     g = g + (100, 3)
     g = g + 20
-
     g.plotDegDist()

@@ -17,8 +17,8 @@ def ffd(f,x,h):
 def show(low,high):
 
     xPoints = linspace(low,high,250)
-    y1Points = [ d_sinx2(num) for num in xPoints ]
-    y2Points = [ ffd(f = sinx2,x = num, h = 0.01) for num in xPoints ]
+    y1Points = list( map( d_sinx2, xPoints ) )
+    y2Points = list( map( lambda x : ffd(f = sinx2, x = x, h = 0.01) , xPoints) )
 
     plt.plot(xPoints,y1Points,'r',label='actual derivative',linestyle='solid',linewidth='1.5')
     plt.plot(xPoints,y2Points,'b:',label='forward finite difference approximation',linewidth='2.5')
@@ -27,7 +27,5 @@ def show(low,high):
     plt.grid()
     plt.show()
 
-
 if __name__ == '__main__':
-
     show(low=0,high=1)
