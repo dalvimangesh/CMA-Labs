@@ -220,8 +220,9 @@ class Polynomial:
 
         coefficients = list(np.linalg.solve(A, b))
         p = Polynomial(coefficients)
-        if isPlot==False:
-            return p
+
+        if isPlot == False: return p
+
         # display a plot with the given points and the computed polynomial
         plt.plot(xPoints, yPoints, "o", color='red')
         p.show(low, high, toShow=False)
@@ -229,7 +230,7 @@ class Polynomial:
         plt.show()
         return p
 
-    def fitViaLagrangePoly(self, points):
+    def fitViaLagrangePoly(self, points, isPlot = True):
 
         '''
         Fits a polynomial of degree len(points)-1 to the given data using lagrange method
@@ -262,6 +263,8 @@ class Polynomial:
                 dR = dR * (xPoints[j] - xPoints[i])
 
             p = p + ((yPoints[j]/dR) * nR)
+
+        if isPlot == False: return p
 
         # display a plot with the given points and the computed polynomial
         plt.plot(xPoints, yPoints, "o", color='red')

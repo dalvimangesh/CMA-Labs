@@ -8,13 +8,13 @@ def f(x):
 
 def showArea(low,high):
 
-    xPoints = linspace( 10 , -10 , 100)
+    xPoints = linspace( 0 , 10 , 100)
     points = [ (x,f(x)) for x in xPoints ]
 
     p = Polynomial([])
     p = p.fitViaMatrixMethod( points = points , isPlot = False)
 
-    calArea = p.area(0,0.5, isString=False)
+    calArea = p.area(0,10, isString=False)
 
     actualArea = 0.171775
 
@@ -25,5 +25,3 @@ def showArea(low,high):
 if __name__=='__main__':
 
     showArea(0,0.5)
-
-
