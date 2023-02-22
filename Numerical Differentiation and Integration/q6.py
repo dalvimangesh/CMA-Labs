@@ -169,14 +169,15 @@ class Polynomial:
         if isFirst: res = str(0)
         return res # result
 
+    #  function to find the integratio of polynomail
     def __integrate(self):
 
-        tempCoeff = [0]
+        tempCoeff = [0] # as there will be no constant term after integration
 
         for power,val in enumerate(self.coefficients):
-            tempCoeff.append( val / ( power + 1 ) )
+            tempCoeff.append( val / ( power + 1 ) ) # integration
         
-        return Polynomial(tempCoeff)
+        return Polynomial(tempCoeff) # result
 
 # Public
 
@@ -274,30 +275,45 @@ class Polynomial:
         plt.ylabel('f̃(x)')
         plt.show()
     
+    # Function to find the derivate of the polynomail
     def derivative(self):
 
         tempCoeff = []
 
         for power,val in enumerate( self.coefficients ):
             
-            if power == 0: continue
+            if power == 0: continue # derivative of constant is zero
         
-            tempCoeff.append( val * power )
+            tempCoeff.append( val * power ) # derivative
 
         return Polynomial(tempCoeff)
 
-    def area(self,a,b,isString=True):
+    # Function to find the area under the polynomail in given range
+    @Check
+    def area(self,a,b,isString=True) -> str:
 
-        integratePolynomail = self.__integrate()
+        # Checking types
+        if (type(a) is not int and type(a) is not float) or (type(b) is not int and type(b) is not float):
+            raise Exception('a and b should be real number')
 
-        Area = integratePolynomail[b] - integratePolynomail[a]
+        if a > b:
+            raise Exception('a should be less than b')
+
+        integratePolynomail = self.__integrate() # getting integration of polynomial
+
+        Area = integratePolynomail[b] - integratePolynomail[a] # definite integration to find area
 
         if isString == False:
             return Area
 
+        # result
         return f"Area in the interval [{a}, {b}] is: {Area}"
 
 if __name__=='__main__':
+
+    # p = Polynomial([1, 2, 3])
+    # pd = p.derivative()
+    # print(pd)
 
     p = Polynomial([1, 2, 3])
     print(p.area(1,2))

@@ -2,27 +2,30 @@ import matplotlib.pyplot as plt
 from numpy import linspace
 import math
 
-
+# given function
 def f(x):
-    return 2 * x * math.exp(x * x)
+    return 2 * x * math.exp(x*x)
 
-
+# integration of given function
 def Integral_f(x):
     return math.exp(x*x)
 
 
 def show(low, high):
 
-    numOfintervals = 100
+    numOfintervals = 100 # no of intervals
     xPoints = []
     yPoints = []
     a, b = low, high
 
+    # original area calculated using definite integration
     originalArea = Integral_f(b) - Integral_f(a)
 
+    # For each interval M calculating the area
     for M in range(1, numOfintervals):
 
-        area = 0
+        # Using trapezoidal formula to calculate area
+        area = 0 
         H = (b - a) / M
 
         for k in range(1, M+1):
@@ -34,10 +37,12 @@ def show(low, high):
         xPoints.append(M)
         yPoints.append(area)
 
+    # Ploting the results
     plt.plot(xPoints, yPoints, color='red',label='Calculated Area at Interval M')
     plt.axhline(y=originalArea,label='Original Area')
     plt.ylabel('area')
     plt.xlabel('M')
+    plt.title('visualization of area under the curve as a function of M \n of function y(x) = 2*x*exp(x²)')
     plt.grid()
     plt.legend()
     plt.show()
