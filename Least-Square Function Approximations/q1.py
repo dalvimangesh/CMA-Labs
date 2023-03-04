@@ -309,10 +309,12 @@ class Polynomial:
         # result
         return f"Area in the interval [{a}, {b}] is: {Area}"
 
-def bestFit(points,n) -> None:
 
-    xPoints = [ x for (x,y) in points ]
-    yPoints = [ y for (x,y) in points ]
+''' function to compute the polynomial of degree n that is the best fit for a given set of points. '''
+def bestFitPoints(points,n) -> None:
+
+    xPoints = [ x for (x,_) in points ]
+    yPoints = [ y for (_,y) in points ]
 
     A = []
     b = []
@@ -331,15 +333,16 @@ def bestFit(points,n) -> None:
         for (x,y) in points: curSum += ( x**i ) * y
         b.append(curSum)
 
-    coefficients = list(np.linalg.solve(A,b))
+    coefficients = list(np.linalg.solve(A,b)) # solving linear equation
+    p = Polynomial(coefficients=coefficients) # Required Polynomial
 
-    p = Polynomial(coefficients=coefficients)
+    # Result, using show method of polynomail class
     p.show(low=min(xPoints),high=max(xPoints), toShow=False)
-
     plt.plot(xPoints,yPoints,"o",color='red')
     plt.show()
     
+    return p
 
 if __name__=='__main__':
 
-    bestFit( [(4, 5), (2, 2), (-1, 3), (4, 10), (5, 5)], 5 )
+    bestFitPoints( [(4, 5), (2, 2), (-1, 3), (4, 10), (5, 5)], 5 )
