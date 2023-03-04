@@ -2,7 +2,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import sys
 import math
-from scipy.integrate import quad, romberg
+from scipy.integrate import romberg
 from q1 import Polynomial
 from q3 import getLegendrePoly
 from q5 import getChebyshevPoly
@@ -16,7 +16,7 @@ def verifyChebyshevPoly(n=5):
     for i in range(n):
         chebyshev.append(getChebyshevPoly(i))
 
-    def w(x): return 1 / math.sqrt(1 - x**2 + epsilon)
+    w = lambda x : 1 / math.sqrt(1 - x**2 + epsilon)
 
     res = []
     a = -1
