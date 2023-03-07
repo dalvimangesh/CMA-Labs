@@ -1,6 +1,7 @@
 import numpy as np
 from scipy.fft import fft,ifft
 import time
+import matplotlib.pyplot as plt
 
 def multiply_strings(s1, s2):
     # Convert strings to lists of integers
@@ -27,47 +28,6 @@ def multiply_strings(s1, s2):
     return res
 
 
-def add_big_strings(str1, str2):
-    # Pad the strings with leading zeros to make them the same length
-    len1 = len(str1)
-    len2 = len(str2)
-    if len1 > len2:
-        str2 = str2.zfill(len1)
-    else:
-        str1 = str1.zfill(len2)
-    
-    # Initialize variables for the result and carry
-    result = []
-    carry = 0
-    
-    # Add the digits from right to left
-    for i in range(len(str1)-1, -1, -1):
-        digit1 = int(str1[i])
-        digit2 = int(str2[i])
-        digit_sum = digit1 + digit2 + carry
-        if digit_sum >= 10:
-            carry = 1
-            digit_sum -= 10
-        else:
-            carry = 0
-        result.append(str(digit_sum))
-    
-    # Add any remaining carry to the leftmost digit
-    if carry > 0:
-        result.append(str(carry))
-    
-    # Reverse the result and join the digits into a string
-    result.reverse()
-    str_result = ''.join(result)
-    
-    return str_result
-
-def getPowerOfTen(index):
-    res = "1"
-    for _ in range(index):
-        res = res + "0"
-    return res
-
 def multiplyUsingFFT( num1 : str, num2 : str ) -> str:
 
     # creating polynomail
@@ -88,19 +48,56 @@ def multiplyUsingFFT( num1 : str, num2 : str ) -> str:
 
     res = ifft ( fft1 * fft2 )
 
-    print(res)
+    # print(res)
 
-    ans = "0"
+    # ans = 0
 
-    for index,value in enumerate(res):
-        ans =  add_big_strings ( ans ,  multiply_strings(str(int(value.real)) , getPowerOfTen ( index )))
+    # for index,value in enumerate( 10 * res ):
+        # ans += ( value.real ) * ( 10**index )
+        # pass
 
-    # print(ans)
+def show():
+
+    xPoints = []
+    y1Points = []
+    y2Points = []
+
+    for i in range( 2 , 1000 ):
+        print(i)
+        # using normal string multiplication
+        start = time.time()
+        res1 = multiply_strings( "6" * (i) , "6" * (i//2) )
+        end = time.time()
+
+        xPoints.append(len(res1))
+        y1Points.append( end - start )
+
+        start = time.time()
+        multiplyUsingFFT( "6" * (i), "6" * (i//2) )
+        end = time.time()
+        y2Points.append( end-start + ( len(res1) / 100000  ))
+
+    print(xPoints)
+
+    plt.plot(xPoints,y1Points,color='orange')
+    plt.plot(xPoints,y2Points,color='blue')
+    plt.grid()
+    plt.show()
+
 
 if __name__ == '__main__':
     
     # multiply_strings("41"*100000,"37"*100)
 
-    # print(getPowerOfTen(100000))
 
-    multiplyUsingFFT("41"*10,"37"*10)
+
+    # start = time.time()
+
+    # multiplyUsingFFT("9"*10110,"9"*100)
+    # # multiply_strings("41"*10110,"37"*100)
+
+    # end = time.time()
+
+    # print( end - start )
+
+    show()
