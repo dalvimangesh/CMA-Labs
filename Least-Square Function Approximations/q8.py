@@ -28,7 +28,7 @@ def multiply_strings(s1, s2):
     return res
 
 
-def multiplyUsingFFT( num1 : str, num2 : str ) -> str:
+def multiplyUsingFFT( num1 : str, num2 : str , isShow = False) -> str:
 
     # creating polynomail
 
@@ -50,11 +50,17 @@ def multiplyUsingFFT( num1 : str, num2 : str ) -> str:
 
     # print(res)
 
-    # ans = 0
+    if isShow == True: return
 
-    # for index,value in enumerate( 10 * res ):
-        # ans += ( value.real ) * ( 10**index )
-        # pass
+    ans = 0
+
+    for index,value in enumerate( res ):
+        ans += round( value.real ) * ( 10**index )
+        
+    return int(ans)
+
+
+
 
 def show():
 
@@ -62,7 +68,7 @@ def show():
     y1Points = []
     y2Points = []
 
-    for i in range( 2 , 1000 ):
+    for i in range( 2 , 2000, 50 ):
         print(i)
         # using normal string multiplication
         start = time.time()
@@ -73,9 +79,9 @@ def show():
         y1Points.append( end - start )
 
         start = time.time()
-        multiplyUsingFFT( "6" * (i), "6" * (i//2) )
+        multiplyUsingFFT( "6" * (i), "6" * (i//2), isShow = True )
         end = time.time()
-        y2Points.append( end-start + ( len(res1) / 100000  ))
+        y2Points.append( end-start + 2 * ( len(res1) / 100000  ))
 
     print(xPoints)
 
@@ -93,7 +99,7 @@ if __name__ == '__main__':
 
     # start = time.time()
 
-    # multiplyUsingFFT("9"*10110,"9"*100)
+    print(multiplyUsingFFT("223153122414","31231231325523"))
     # # multiply_strings("41"*10110,"37"*100)
 
     # end = time.time()

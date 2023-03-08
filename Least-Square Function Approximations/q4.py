@@ -39,11 +39,11 @@ def bestFitUsingLegendrePoly(n):
     xPoints = list(np.linspace(-1, 1, 100))
     yPoints = list(map(f, xPoints))
 
-    plt.plot(xPoints, yPoints, color='red')
+    plt.plot(xPoints, yPoints, color='red',dashes=(5,3),linewidth=2.2)
 
     plt.show()
 
 
 if __name__ == '__main__':
 
-    bestFitUsingLegendrePoly(n=3)
+    bestFitUsingLegendrePoly(n=5)
