@@ -1,13 +1,19 @@
-import numpy as np
-import matplotlib.pyplot as plt
-import sys
-import math
-from scipy.integrate import romberg
 from q1 import Polynomial
-from q3 import getLegendrePoly
 
 
 def getChebyshevPoly(n):
+
+    '''
+    function that uses the enhanced Polynomial class (developed in the last coding
+    assignment) to compute the n th Chebyshev polynomial.
+    '''
+
+    try:
+        if n < 0: raise Exception('n should be non negative')
+    except Exception as e:
+        print(type(e))
+        print(e)
+        exit(-1)
 
     T_0 = Polynomial([1]) # T1(x) = 1
 
@@ -19,13 +25,14 @@ def getChebyshevPoly(n):
 
     X = T_1
 
+    # Generate the nth Chebyshev polynomial using the recurrence relation Tn+1(x) = 2*x*Tn(x) - Tn-1(x)
     for _ in range(2,n+1):
         T_N = 2 * X * T_1 - T_0
         T_0 = T_1
         T_1 = T_N
 
+    # result
     return T_1
-
 
 if __name__ == '__main__':
 

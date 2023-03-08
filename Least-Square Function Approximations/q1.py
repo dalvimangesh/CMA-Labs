@@ -188,7 +188,7 @@ class Polynomial:
         yPoints = list(map(self.__getitem__, xPoints)) # list of polynomail value at each xPoints
 
         # Ploting
-        plt.plot(xPoints, yPoints, color='blue')
+        plt.plot(xPoints, yPoints, color='blue',label=self.__getTitle())
         plt.xlabel('x')
         plt.ylabel('p(x)')
         plt.title("Plot of the polynomial " + self.__getTitle())
@@ -311,14 +311,23 @@ class Polynomial:
 
 
 ''' function to compute the polynomial of degree n that is the best fit for a given set of points. '''
+@Check
 def bestFitPoints(points,n) -> None:
+
+    if n < 0:
+        raise Exception('n should be non negative')
+
+    if type(points) is not list:
+        raise Exception('points should be in list')
 
     xPoints = [ x for (x,_) in points ]
     yPoints = [ y for (_,y) in points ]
 
+    # initialize A and b matrices to solve linear equations
     A = []
     b = []
 
+    # finding A matrix by computing sum of x values raised to i+j power for each (i,j) combination
     for i in range(0,n+1):
         curRow = []   
         for j in range(0,n+1):
@@ -327,7 +336,7 @@ def bestFitPoints(points,n) -> None:
             curRow.append(curSum)
         A.append(curRow)
 
-    
+    # finding b matrix by computing sum of x values raised to i power multiplied by y values
     for i in range(0,n+1):
         curSum = 0
         for (x,y) in points: curSum += ( x**i ) * y
@@ -338,11 +347,14 @@ def bestFitPoints(points,n) -> None:
 
     # Result, using show method of polynomail class
     p.show(low=min(xPoints),high=max(xPoints), toShow=False)
-    plt.plot(xPoints,yPoints,"o",color='red')
+    plt.title('Best fit curve for a given set of points')
+    plt.plot(xPoints,yPoints,"o",color='red',label='given points')
+    plt.xlabel('x')
+    plt.ylabel('f(x)')
+    plt.legend()
     plt.show()
-    
     return p
 
 if __name__=='__main__':
 
-    bestFitPoints( [(4, 5), (2, 2), (-1, 3), (4, 10), (5, 5)], 5 )
+    bestFitPoints( [(1, 2), (2, 3), (3, 4), (4, 1), (5, 6)], 5 )
