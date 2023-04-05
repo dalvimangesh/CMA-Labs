@@ -27,7 +27,7 @@ def solveVanDarPolEquation(t0, y0):
 
     sol = solve_ivp(fun=f, t_span=[t0, 100], y0=y0, t_eval=tPoints)
 
-    r1x, r1y, r2x, r2y, r3x, r3y, *vs = sol.y
+    r1x, r1y, r2x, r2y, r3x, r3y = sol.y[0],sol.y[1],sol.y[2],sol.y[3],sol.y[4],sol.y[5]
     
     fig, ax = plt.subplots()
 
