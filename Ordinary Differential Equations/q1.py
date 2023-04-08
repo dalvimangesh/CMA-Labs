@@ -4,6 +4,8 @@ import sys
 import math
 
 # Function to check for any exception in inputFunction
+
+
 def Check(inputFunction):
 
     # Function to handle the exception
@@ -17,16 +19,18 @@ def Check(inputFunction):
 
     return newFunction
 
+
 class Polynomial:
 
     @Check
     def __init__(self, coefficients) -> None:
 
         if type(coefficients) is not list or not all((type(i) is float or type(i) is int or type(i) is np.float64) for i in coefficients):
-            raise Exception('Input must be list and all elements must be either float or int')
+            raise Exception(
+                'Input must be list and all elements must be either float or int')
 
         self.coefficients = coefficients
-        self.degree = max(0,len(coefficients)-1)
+        self.degree = max(0, len(coefficients)-1)
 
     # Returns string form the Polynomial class
     def __str__(self) -> str:
@@ -94,7 +98,7 @@ class Polynomial:
     # Multiply two polynomial
     def __polyMul(self, p) -> list:
 
-        tempCoeff = dict() # sotring coefficient of ith degree at key = i
+        tempCoeff = dict()  # sotring coefficient of ith degree at key = i
 
         # performing multiplication
         for coef1 in range(self.degree+1):
@@ -109,15 +113,13 @@ class Polynomial:
     def __getTitle(self) -> str:
 
         # Returns the superscript representation of a positive integer
-        def getSuperscript( n: int ) -> str:
+        def getSuperscript(n: int) -> str:
             superscript_digits = str.maketrans("-0123456789", "⁻⁰¹²³⁴⁵⁶⁷⁸⁹")
             # use str.translate to replace each digit with its corresponding superscript
             return str(n).translate(superscript_digits)
 
-        res = "" # Result
-        isFirst = True # flag to store wheather we have added at least one term in res or not
-
-
+        res = ""  # Result
+        isFirst = True  # flag to store wheather we have added at least one term in res or not
 
         '''
         checks for special cases such as negative coefficients and coefficient equal to 1.
@@ -127,15 +129,15 @@ class Polynomial:
 
         for power, value in enumerate(self.coefficients):
 
-            if value == 0: # not adding terms having zero coefficient
+            if value == 0:  # not adding terms having zero coefficient
                 continue
 
             curCoeff = round(value, 2)
 
             if power == 0:
                 res += str(curCoeff)
-            elif power == 1: # for power 1, not writing 1 at power place
-                if isFirst: 
+            elif power == 1:  # for power 1, not writing 1 at power place
+                if isFirst:
                     if curCoeff == -1:
                         res += '-' + 'x'
                     elif curCoeff == 1:
@@ -148,13 +150,14 @@ class Polynomial:
                     elif curCoeff == 1:
                         res += ('+' + 'x')
                     else:
-                        res += ('+' + str(curCoeff) +'x') if curCoeff >= 0 else (str(curCoeff) + 'x')
+                        res += ('+' + str(curCoeff) +
+                                'x') if curCoeff >= 0 else (str(curCoeff) + 'x')
             else:
                 if isFirst:
                     if curCoeff == -1:
-                        res += ( '-' + 'x' + getSuperscript(power) )
+                        res += ('-' + 'x' + getSuperscript(power))
                     elif curCoeff == 1:
-                        res += ( 'x' + getSuperscript(power) )
+                        res += ('x' + getSuperscript(power))
                     else:
                         res += (str(curCoeff) + 'x' + getSuperscript(power))
                 else:
@@ -163,33 +166,37 @@ class Polynomial:
                     elif curCoeff == 1:
                         res += ('+' + 'x' + getSuperscript(power))
                     else:
-                        res += ('+' + str(curCoeff) + 'x' + getSuperscript(power)) if curCoeff >= 0 else (str(curCoeff) + 'x' + getSuperscript(power))
+                        res += ('+' + str(curCoeff) + 'x' + getSuperscript(power)
+                                ) if curCoeff >= 0 else (str(curCoeff) + 'x' + getSuperscript(power))
 
             isFirst = False
 
-        if isFirst: res = str(0)
-        return res # result
+        if isFirst:
+            res = str(0)
+        return res  # result
 
     #  function to find the integratio of polynomail
     def __integrate(self):
 
-        tempCoeff = [0] # as there will be no constant term after integration
+        tempCoeff = [0]  # as there will be no constant term after integration
 
-        for power,val in enumerate(self.coefficients):
-            tempCoeff.append( val / ( power + 1 ) ) # integration
-        
-        return Polynomial(tempCoeff) # result
+        for power, val in enumerate(self.coefficients):
+            tempCoeff.append(val / (power + 1))  # integration
+
+        return Polynomial(tempCoeff)  # result
 
 # Public
 
     # function to visualize the polynomial in any interval of the type [a, b]
     def show(self, low, high, toShow=True):
 
-        xPoints = list(np.linspace(low, high, 100)) # creating 100 uniform points in range [low,high]
-        yPoints = list(map(self.__getitem__, xPoints)) # list of polynomail value at each xPoints
+        # creating 100 uniform points in range [low,high]
+        xPoints = list(np.linspace(low, high, 100))
+        # list of polynomail value at each xPoints
+        yPoints = list(map(self.__getitem__, xPoints))
 
         # Ploting
-        plt.plot(xPoints, yPoints,label=self.__getTitle())
+        plt.plot(xPoints, yPoints, label=self.__getTitle())
         plt.xlabel('x')
         plt.ylabel('p(x)')
         plt.title("Plot of the polynomial " + self.__getTitle())
@@ -197,9 +204,7 @@ class Polynomial:
         if toShow:
             plt.show()
 
-
-    def fitViaMatrixMethod(self, points, isPlot = True):
-
+    def fitViaMatrixMethod(self, points, isPlot=True):
         '''
         Fits a polynomial of degree len(points)-1 to the given data using the matrix method
         and plots the polynomial
@@ -223,7 +228,8 @@ class Polynomial:
         coefficients = list(np.linalg.solve(A, b))
         p = Polynomial(coefficients)
 
-        if isPlot == False: return p
+        if isPlot == False:
+            return p
 
         # display a plot with the given points and the computed polynomial
         # plt.plot(xPoints, yPoints, "o", color='red')
@@ -232,8 +238,7 @@ class Polynomial:
         # plt.show()
         return p
 
-    def fitViaLagrangePoly(self, points, isPlot = True):
-
+    def fitViaLagrangePoly(self, points, isPlot=True):
         '''
         Fits a polynomial of degree len(points)-1 to the given data using lagrange method
         and plots the polynomial
@@ -266,32 +271,35 @@ class Polynomial:
 
             p = p + ((yPoints[j]/dR) * nR)
 
-        if isPlot == False: return p
+        if isPlot == False:
+            return p
 
         # display a plot with the given points and the computed polynomial
         plt.plot(xPoints, yPoints, "o", color='red')
         p.show(low, high, toShow=False)
-        plt.title('Polynomial interpolation using lagrange method ' + p.__getTitle())
+        plt.title(
+            'Polynomial interpolation using lagrange method ' + p.__getTitle())
         plt.xlabel('x')
         plt.ylabel('f̃(x)')
         plt.show()
-    
+
     # Function to find the derivate of the polynomail
     def derivative(self):
 
         tempCoeff = []
 
-        for power,val in enumerate( self.coefficients ):
-            
-            if power == 0: continue # derivative of constant is zero
-        
-            tempCoeff.append( val * power ) # derivative
+        for power, val in enumerate(self.coefficients):
+
+            if power == 0:
+                continue  # derivative of constant is zero
+
+            tempCoeff.append(val * power)  # derivative
 
         return Polynomial(tempCoeff)
 
     # Function to find the area under the polynomail in given range
     @Check
-    def area(self,a,b,isString=True) -> str:
+    def area(self, a, b, isString=True) -> str:
 
         # Checking types
         if (type(a) is not int and type(a) is not float) or (type(b) is not int and type(b) is not float):
@@ -300,9 +308,10 @@ class Polynomial:
         if a > b:
             raise Exception('a should be less than b')
 
-        integratePolynomail = self.__integrate() # getting integration of polynomial
+        integratePolynomail = self.__integrate()  # getting integration of polynomial
 
-        Area = integratePolynomail[b] - integratePolynomail[a] # definite integration to find area
+        # definite integration to find area
+        Area = integratePolynomail[b] - integratePolynomail[a]
 
         if isString == False:
             return Area
@@ -311,42 +320,47 @@ class Polynomial:
         return f"Area in the interval [{a}, {b}] is: {Area}"
 
 
-def forwardEulerMethod(ode,originalSol,hlist,x0,a,b):
+def forwardEulerMethod(ode, originalSol, hlist, x0=5, a=0, b=10):
+    '''
+    Function that uses the forward Euler method to solve the ODE x (t) = -2x(t), with
+    initial condition x(0) = 5, in the interval [0, 10], computes a polynomial that passes through
+    the discrete solution points of the ODE.
+    '''
 
-
+    # Loop through each step size in the list of h values
     for h in hlist:
 
         xPoints = [x0]
-        points = [(0,x0)]
-        tPoints = list( np.arange( a,b,h ) )
+        points = [(0, x0)]
+        tPoints = list(np.arange(a, b, h))
 
+        # Perform the Forward Euler method
+        for i in range(1, len(tPoints)):
 
-        for i in range( 1 , len(tPoints) ):
-
-            xPoints.append( ode( tPoints[i-1],xPoints[i-1],h  ) )
-
-            points.append( ( tPoints[i], xPoints[i] ) )
+            # Update x using the Euler method
+            xPoints.append(ode(tPoints[i-1], xPoints[i-1], h))
+            points.append((tPoints[i], xPoints[i]))
 
         p = Polynomial([0])
+
+        # Fit a polynomial to the points using matrix method
+        # print(points)
         p.fitViaMatrixMethod(points=points)
 
-
-    xPoints = list(np.linspace(a,b,100))
-    yPoints = list( map( originalSol, xPoints ) )
-    print(yPoints)
-    plt.plot(xPoints,yPoints,color='red')
-
-    plt.ylim(-6,6)
+    # Result
+    xPoints = list(np.linspace(a, b, 100))
+    yPoints = list(map(originalSol, xPoints))
+    plt.plot(xPoints, yPoints, color='red')
+    plt.ylim(-6, 6)
     plt.show()
 
-if __name__=='__main__':
 
-    def givenODE(t,x,h) : return x * ( 1 - 2*h )
+if __name__ == '__main__':
 
-    def originalSol (x) : return math.exp(-2*x) * 5
+    def givenODE(t, x, h): return x * (1 - 2*h)
+
+    def originalSol(x): return math.exp(-2*x) * 5
 
     hlist = [0.1, 0.5, 1, 2, 3]
 
-    x0 = 5
-
-    forwardEulerMethod( ode=givenODE, originalSol=originalSol, hlist=hlist, x0=x0, a=0, b=10)
+    forwardEulerMethod(ode=givenODE, originalSol=originalSol, hlist=hlist)
