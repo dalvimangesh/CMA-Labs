@@ -2,6 +2,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import sys
 import math
+from random import random
 
 # Function to check for any exception in inputFunction
 
@@ -318,17 +319,54 @@ class Polynomial:
 
         # result
         return f"Area in the interval [{a}, {b}] is: {Area}"
-
-
-
-
-def computeRootsAberth(p,nums):
     
     
+    def printRoots(self, roots):
 
-    pass
+        # TODO 
 
+        P = Polynomial([1])
+
+        for i in roots:
+            P = P * Polynomial([-i, 1])
+
+        dP = P.derivative()
+
+        x = []
+        for _ in range(len(roots)):
+            x.append(random())
+
+        while( True ):
+
+            newx = []
+            flag = True
+
+            x.sort();
+            roots.sort()
+            
+            for i in range(len(x)):
+
+                if(abs(x[i] - roots[i]) > 0.001): flag = False
+            
+            if flag: return x
+            
+            for k in range(len(x)):
+                drSum = 0
+                for j in range(len(x)):
+                    if(k == j or x[k] == x[j]): continue
+                    drSum += 1/(x[k] - x[j])
+                
+                drMiddle = P[x[k]] / ( 0.001 if dP[x[k]] == 0 else dP[x[k]] )
+                dr = 1 - drMiddle * drSum
+                
+                newx.append(x[k] - drMiddle/dr)
+                
+            x = newx
 
 if __name__ == "__main__":
     # Testing the function
-    computeRootsAberth([1, 3, 5, 7, 9])
+    # computeRootsAberth([1, 3, 5, 7, 9])
+    p = Polynomial([])
+    print(p.printRoots([2,3]))
+    print(p.printRoots([4,2, 3,1]))
+
