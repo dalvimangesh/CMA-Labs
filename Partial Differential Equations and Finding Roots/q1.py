@@ -1,45 +1,56 @@
-import numpy as np
-from scipy.integrate import solve_ivp
 import matplotlib.pyplot as plt
+from scipy.integrate import solve_ivp
 from matplotlib.animation import FuncAnimation
+import numpy as np
 
-# Define the constants
-L = 1.0  # Length of the rod
-alpha = 0.01  # Thermal diffusivity
+# define the initial temperature distribution
+def initialCondition(x, L):
+    u = []
+    for i in range(len(x)):
+        if x[i] == 0 or x[i] == L:
+            u.append(0)
+        else:
+            u.append(np.exp(-x[i]))
+    return u
 
-# Define the initial condition
-def initial_condition(x):
-    return np.exp(-x) * (1 - np.logical_or(x==0, x==L))
 
-# Define the PDE
-def heat_conduction_pde(t, u):
-    dudt = np.zeros_like(u)
-    dudt[1:-1] = alpha * (u[2:] - 2 * u[1:-1] + u[:-2]) / ((L / (len(u) - 1)) ** 2)
-    dudt[0] = 0
-    dudt[-1] = 0
-    return dudt
+# Define the PDE for heat conduction
+def heatConductionPDE(t, u, mu, L):
+    du_dt = []
+    dx = L / (len(u) - 1)
+    du_dt.append(0)
+    for i in range(1, len(u) - 1):
+        du_dt_i = mu * (u[i+1] - 2 * u[i] + u[i-1]) / dx**2
+        du_dt.append(du_dt_i)
+    du_dt.append(0)
+    return du_dt
 
-# Define the time range and the number of spatial points
-t_span = (0, 5)
-N = 100
 
-# Create the spatial grid
-x = np.linspace(0, L, N)
+if __name__ == '__main__':
 
-# Solve the PDE using the initial condition
-sol = solve_ivp(heat_conduction_pde, t_span, initial_condition(x), t_eval=np.linspace(t_span[0], t_span[1], 200))
+    L = 1.0  # length of the rod
+    mu = 0.01  # thermal diffusivity
+    t_span = (0, 5)  # time interval for simulation
+    N = 100  # number of spatial grid points
+    x = np.linspace(0, L, N)  # spatial grid
 
-# Define the animation function
-def animate(i):
-    plt.clf()
-    plt.imshow(sol.y[:, [i]].T, cmap='Reds', extent=[0, L, 0, 1], aspect=L)
-    plt.title(f"Time: {sol.t[i]:.2f}")
-    plt.xlabel("Position")
-    plt.ylabel("Temperature")
+    # solve the PDE using the initial condition and time span
+    u0 = initialCondition(x, L)
+    sol = solve_ivp(lambda t, u: heatConductionPDE(t, u, mu, L), t_span, u0, t_eval=np.linspace(t_span[0], t_span[1], 200))
 
-# Create the animation
-fig = plt.figure(figsize=(6, 4))
-ani = FuncAnimation(fig, animate, frames=len(sol.t), interval=50)
+    # Result
+    fig = plt.figure(figsize=(6, 4))
 
-# Show the animation
-plt.show()
+    def animate(i):
+        plt.clf()
+        u = sol.y[:, i]
+        plt.plot(x, u, color='red')
+        plt.xlim([0, L])
+        plt.ylim([0, 1])
+        plt.xlabel("Position")
+        plt.ylabel("Temperature")
+        plt.title(f"Time: {sol.t[i]:.2f}")
+
+    _ = FuncAnimation(fig, animate, frames=len(sol.t), interval=50)
+    # _.save('q1.gif')
+    plt.show()

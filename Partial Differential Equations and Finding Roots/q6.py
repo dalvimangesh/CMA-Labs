@@ -323,10 +323,16 @@ class Polynomial:
     
     def printRoots(self, roots):
 
-        # TODO 
+        '''
+        function that takes as its arguments an array of real
+        number [a 1 , a 2 , . . . , an ], computes the polynomial g(x) = nΠi=1 (x - ai ), and outputs all roots
+        of g(x) computed (within an error is 10^-3 ) using the Aberth method.
+        '''
 
+        # create a new polynomial with a leading coefficient of 1
         P = Polynomial([1])
 
+        # Use the roots to build a polynomial with the corresponding factors
         for i in roots:
             P = P * Polynomial([-i, 1])
 
@@ -336,20 +342,27 @@ class Polynomial:
         for _ in range(len(roots)):
             x.append(random())
 
+
+        # Iterate until convergence
         while( True ):
 
+            # Create a new list to store the updated values of x
             newx = []
+
+            # Flag to indicate if x has converged to the roots
             flag = True
 
+            # Sort x and roots so we can compare them element-wise
             x.sort();
             roots.sort()
             
+            # check if each element of x is close enough to the corresponding root
             for i in range(len(x)):
-
                 if(abs(x[i] - roots[i]) > 0.001): flag = False
             
             if flag: return x
             
+            # Update each element of x using the iterative method
             for k in range(len(x)):
                 drSum = 0
                 for j in range(len(x)):
@@ -369,4 +382,3 @@ if __name__ == "__main__":
     p = Polynomial([])
     print(p.printRoots([2,3]))
     print(p.printRoots([4,2, 3,1]))
-

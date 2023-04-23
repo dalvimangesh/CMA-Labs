@@ -1,18 +1,15 @@
 import math
 import matplotlib.pyplot as plt
 
-
-# TODO Change function
+# define the function f(x) and its derivative f'(x)
 def f(x):
-    return x * math.exp(-x)
-
+    return x**3
 
 def f_dash(x):
-    return -x * math.exp(-x) + math.exp(-x)
+    return 3*(x**2)
 
-
+# Secant Method to find the root of f(x)
 def secantMethod(x0, x1, k):
-
     xValues = [x0, x1]
 
     for _ in range(k):
@@ -23,9 +20,8 @@ def secantMethod(x0, x1, k):
 
     return xValues
 
-
+# Newton-Raphson Method to find the root of f(x)
 def newtonRMethod(x0, k):
-
     xvals = [x0]
 
     for _ in range(k):
@@ -35,9 +31,8 @@ def newtonRMethod(x0, k):
 
     return xvals
 
-
+# calculate the rate of convergence for a sequence of approximations
 def rateOfConvergence(xValues):
-
     values = []
     for i in range(2, len(xValues) - 1):
         Nr = math.log(
@@ -50,19 +45,20 @@ def rateOfConvergence(xValues):
 
 
 if __name__ == '__main__':
+    
+    xSecant = secantMethod(100, 200, 50)
+    xNewtonR = newtonRMethod(100, 50)
 
-    xSecant = secantMethod(2, 3, 100)
-    xNewtonR = newtonRMethod( 2, 100 )
+    # Calculate the rate of convergence for the two methods
+    secandConv = rateOfConvergence(xSecant)
+    newtonRConv = rateOfConvergence(xNewtonR)
 
-    secandConv = rateOfConvergence( xSecant )
-    newtonRConv = rateOfConvergence ( xNewtonR )
-
+    # Plot the rate of convergence for the two methods
     plt.title("Rate of Convergence")
-    # plt.ylabel(`α')
+    plt.ylabel('alpha')
     plt.xlabel("Iteration")
     plt.plot(list(range(2, len(secandConv) + 2)), secandConv, label="Secant Method")
     plt.plot(list(range(2, len(newtonRConv) + 2)), newtonRConv, label="Newton-Raphson Method")
     plt.legend()
     plt.grid()
     plt.show()
-

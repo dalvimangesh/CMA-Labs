@@ -360,25 +360,31 @@ class Polynomial:
 
     def printRoots(self, f, a, b, degree):
 
-        # TODO
-
+        # Use the best fit function to create a polynomial approximation of the input function
         P = self.__bestFitFunction(n=degree, f=f, a=a, b=b)
         dP = P.derivative()
 
         x = [random() for _ in range(degree)]
 
+        # Iterate until convergence
         while (True):
-
+            
+            # create a new list to store the updated values of x
             newx = []
+
+            # Flag to indicate if x has converged to the roots
             flag = True
+
+            # Sort x and roots so we can compare them element-wise
             x.sort()
 
             for val in x:
-                # print(val - 0.001)
+                # check if each element of x is close enough to the corresponding root
                 if (val + 0.001 > a and val - 0.001 < b and abs(P[val]) > 0.001):
                     flag = False
                     break
-
+            
+            # if any element of x is a root of the polynomial, return the roots
             if flag:
                 ans = []
                 for i in range(degree):
@@ -387,6 +393,7 @@ class Polynomial:
                         ans.append(x[i])
                 return ans
 
+            # update each element of x using the iterative method
             for k in range(len(x)):
                 drSum = 0
                 for j in range(len(x)):
@@ -404,13 +411,18 @@ class Polynomial:
 
 def computeZerosFunction(f, a, b):
 
+    '''
+    Function compute all zeros of a continuous function
+    '''
+
     P = Polynomial([])
     res = P.printRoots(f, a, b, 2)
+
+    # Return the roots
     return res
 
 
 if __name__ == "__main__":
-    # Testing the function
 
     def f(x):
         return x*x - 1

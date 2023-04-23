@@ -1,8 +1,9 @@
+# Import the required libraries
 import math
 import matplotlib.pyplot as plt
 import scipy.linalg as linalg
 
-
+# define the function f(x) and its Jacobian matrix
 def f(x):
     x1, x2, x3 = x
     fx1 = 3 * x1 - math.cos(x2 * x3) - (3 / 2)
@@ -19,8 +20,8 @@ def fJocobi(x):
     return [j1, j2, j3]
 
 
+# Newton-Raphson Method to find the root of f(x)
 def newtonRMethod(x0, k):
-
     xvals = [x0]
 
     for _ in range(k):
@@ -31,15 +32,12 @@ def newtonRMethod(x0, k):
 
 
 if __name__ == "__main__":
-
+    # root of f(x) using the Newton-Raphson Method
     xNR = newtonRMethod([1, 2, 3], 20)
-
     print(f"The root of the function is {xNR[-1]}")
 
-    # Evaluating the norm of the function at the obtained points
+    # Calculate the norm of f(x) for each approximation and plot the results
     fNR = [linalg.norm(f(x)) for x in xNR]
-
-    # Plotting the rate of convergence
     plt.title("||f(xₖ)|| vs Iterations")
     plt.xlabel("Iteration")
     plt.ylabel("||f(xₖ)||")
