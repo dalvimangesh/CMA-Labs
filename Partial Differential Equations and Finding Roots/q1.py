@@ -50,7 +50,8 @@ if __name__ == '__main__':
         plt.xlabel("Position")
         plt.ylabel("Temperature")
         plt.title(f"Time: {sol.t[i]:.2f}")
+        plt.grid()
 
     _ = FuncAnimation(fig, animate, frames=len(sol.t), interval=50)
-    # _.save('q1.gif')
+    _.save('q1.gif')
     plt.show()

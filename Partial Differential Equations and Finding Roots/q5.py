@@ -38,10 +38,10 @@ if __name__ == "__main__":
 
     # Calculate the norm of f(x) for each approximation and plot the results
     fNR = [linalg.norm(f(x)) for x in xNR]
-    plt.title("||f(xₖ)|| vs Iterations")
+    plt.title("||f(xₖ)|| vs iterations")
     plt.xlabel("Iteration")
     plt.ylabel("||f(xₖ)||")
-    plt.plot(list(range(0, len(xNR))), fNR, label="Newton-Raphson Method")
+    plt.plot(list(range(0, len(xNR))), fNR, label=" Newton-Raphson method ")
     plt.legend()
     plt.grid()
     plt.show()
